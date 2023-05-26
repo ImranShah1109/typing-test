@@ -1,11 +1,14 @@
+import TypingBox from "./Components/TypingBox";
 import { GlobalStyles } from "./Styles/global";
 
 
 function App() {
   return (
-    <div className="App">
+    <div className="canvas">
       <GlobalStyles/>
-      Hello
+      <div>Header</div>
+      <TypingBox/>
+      <div>Footer</div>
     </div>
   );
 }
