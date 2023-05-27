@@ -51,4 +51,26 @@ export const GlobalStyles = createGlobalStyle`
         opacity : 0;
     }
 
+    .current{
+        border-left : 1px solid;
+        animation : blinking 2s infinite;
+        animation-timing-function : ease;
+
+        @keyframes blinking{
+            0%{border-left-color : white;}
+            25%{border-left-color : black;}
+            50%{border-left-color : white;}
+            75%{border-left-color : black;}
+            100%{border-left-color : white;}
+        }
+    }
+
+    .correct{
+        color : green;
+    }
+
+    .incorrect{
+        color : red;
+    }
+
 `

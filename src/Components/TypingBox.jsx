@@ -1,4 +1,4 @@
-import React, { useEffect,useState,useRef } from "react";
+import React, { createRef,useEffect,useState,useRef,useMemo } from "react";
 
 var randomWords = require('random-words');
 
@@ -9,8 +9,26 @@ const TypingBox = () => {
         return randomWords(50);
     });
 
+    const [currWordIndex, setCurrWordIndex] = useState(0);
+    const [currCharIndex, setCurrCharIndex] = useState(0);
+
+    const wordsSpanRef = useMemo(() => {
+        return Array(wordsArray.length).fill(0).map(i=>createRef(null));
+    }, [wordsArray]);
+
+
     const handleUserInput = (e) =>{
-        console.log(e)
+        const allCurrChars = wordsSpanRef[currWordIndex].current.childNodes;
+        // console.log(allCurrChars[0].innerText)
+
+        if(e.key === allCurrChars[currCharIndex].innerText){
+            // console.log("correct input")
+            allCurrChars[currCharIndex].className = "correct"; 
+        }
+        else{
+            // console.log("incorrect");
+            allCurrChars[currCharIndex].className = "incorrect"; 
+        }
     }
 
     const focusInput = () =>{
@@ -19,6 +37,7 @@ const TypingBox = () => {
 
     useEffect(() => {
         focusInput();
+        wordsSpanRef[0].current.childNodes[0].className = "current";
     }, []);
 
     return(
@@ -26,10 +45,10 @@ const TypingBox = () => {
             <div className='type-box' onClick={focusInput}>
                 <div className='words'>
                     {
-                        wordsArray.map(word=>(
-                            <span className='word'>
+                        wordsArray.map((word,index)=>(
+                            <span className='word' ref={wordsSpanRef[index]}>
                                 {word.split('').map(char=>(
-                                    <span>{char}</span>
+                                    <span >{char}</span>
                                 ))}
                             </span>
                         ))
