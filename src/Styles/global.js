@@ -65,6 +65,20 @@ export const GlobalStyles = createGlobalStyle`
         }
     }
 
+    .current-right{
+        border-right : 1px solid;
+        animation : blinkingRight 2s infinite;
+        animation-timing-function : ease;
+
+        @keyframes blinkingRight{
+            0%{border-right-color : white;}
+            25%{border-right-color : black;}
+            50%{border-right-color : white;}
+            75%{border-right-color : black;}
+            100%{border-right-color : white;}
+        }
+    }
+
     .correct{
         color : green;
     }

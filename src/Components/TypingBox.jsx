@@ -21,6 +21,25 @@ const TypingBox = () => {
         const allCurrChars = wordsSpanRef[currWordIndex].current.childNodes;
         // console.log(allCurrChars[0].innerText)
 
+        if(e.keyCode === 32){ //32 keyCode is for space
+            // logic for space
+
+            if(allCurrChars.length <= currCharIndex){
+                // remove cursor from last place in a word
+                allCurrChars[currCharIndex-1].classList.remove("current-right")
+            }
+            else{
+                // remove cursor from in between in the word
+                allCurrChars[currCharIndex].classList.remove("current")
+            }
+
+            // move the cursor blinking to next word
+            wordsSpanRef[currWordIndex+1].current.childNodes[0].className = "current";
+            setCurrWordIndex(currWordIndex+1);
+            setCurrCharIndex(0);
+            return;
+        }
+
         if(e.key === allCurrChars[currCharIndex].innerText){
             // console.log("correct input")
             allCurrChars[currCharIndex].className = "correct"; 
@@ -29,6 +48,16 @@ const TypingBox = () => {
             // console.log("incorrect");
             allCurrChars[currCharIndex].className = "incorrect"; 
         }
+
+        if(currCharIndex+1 === allCurrChars.length){
+            allCurrChars[currCharIndex].className += " current-right";
+        }
+        else{
+            allCurrChars[currCharIndex+1].className = "current";
+        }
+        
+
+        setCurrCharIndex(currCharIndex+1);
     }
 
     const focusInput = () =>{
