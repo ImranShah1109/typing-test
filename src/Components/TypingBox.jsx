@@ -40,6 +40,45 @@ const TypingBox = () => {
             return;
         }
 
+        if(e.keyCode === 8){ //keyCode = 8 is for backspace
+            // logic for backspace
+
+            if(currCharIndex !== 0){
+
+                if(allCurrChars.length === currCharIndex){
+
+                    if(allCurrChars[currCharIndex-1].className.includes('extra')){
+                        allCurrChars[currCharIndex-1].remove();
+                        allCurrChars[currCharIndex-2].className += " current-right";
+                    }
+                    else{
+                        allCurrChars[currCharIndex-1].className = "current";
+                    }
+
+                    setCurrCharIndex(currCharIndex-1);
+                    return;
+                }
+                  
+                allCurrChars[currCharIndex].className = "";
+                allCurrChars[currCharIndex-1].className = "current";
+                setCurrCharIndex(currCharIndex-1);
+            }
+
+            return;
+
+        }
+
+        if(currCharIndex === allCurrChars.length){
+            
+            let newSpan = document.createElement('span');
+            newSpan.innerText = e.key;
+            newSpan.className = "incorrect extra current-right";
+            allCurrChars[currCharIndex-1].classList.remove('current-right');
+            wordsSpanRef[currWordIndex].current.append(newSpan);
+            setCurrCharIndex(currCharIndex+1);
+            return;
+        }
+
         if(e.key === allCurrChars[currCharIndex].innerText){
             // console.log("correct input")
             allCurrChars[currCharIndex].className = "correct"; 
