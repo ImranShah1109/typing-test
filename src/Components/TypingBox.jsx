@@ -1,10 +1,15 @@
 import React, { createRef,useEffect,useState,useRef,useMemo } from "react";
+import { UpperMenu } from "./UpperMenu";
 
 var randomWords = require('random-words');
 
 const TypingBox = () => {
 
     const inputRef = useRef(null)
+    const [countDown, setCountDown] = useState(15);
+    const [testStart, setTestStart] = useState(false);   
+    const [testEnd, setTestEnd] = useState(false);  
+
     const [wordsArray, setWordsArray] = useState(()=>{
         return randomWords(50);
     });
@@ -17,7 +22,31 @@ const TypingBox = () => {
     }, [wordsArray]);
 
 
+    const startTimer = () =>{
+
+        const intervalId = setInterval(timer, 1000);
+
+        function timer(){
+            setCountDown((latestCountDown)=>{
+
+                if (latestCountDown === 1) {
+                    setTestEnd(true);
+                    clearInterval(intervalId);
+                    return 0;
+                }
+
+                return latestCountDown-1;
+            });
+        }
+    }
+
     const handleUserInput = (e) =>{
+
+        if(!testStart){
+            startTimer();
+            setTestStart(true);
+        }
+
         const allCurrChars = wordsSpanRef[currWordIndex].current.childNodes;
         // console.log(allCurrChars[0].innerText)
 
@@ -109,27 +138,28 @@ const TypingBox = () => {
     }, []);
 
     return(
-        <React.Fragment>
-            <div className='type-box' onClick={focusInput}>
+        <div>
+            <UpperMenu countDown={countDown}/>
+            {(testEnd) ? (<h1>Test Over</h1>) : (<div className='type-box' onClick={focusInput}>
                 <div className='words'>
                     {
-                        wordsArray.map((word,index)=>(
+                        wordsArray.map((word, index) => (
                             <span className='word' ref={wordsSpanRef[index]}>
-                                {word.split('').map(char=>(
+                                {word.split('').map(char => (
                                     <span >{char}</span>
                                 ))}
                             </span>
                         ))
                     }
                 </div>
-            </div>
+            </div>)}
             <input
                 type ='text'
                 className = 'hidden-input'
                 ref = {inputRef}
                 onKeyDown = {handleUserInput}
             />
-        </React.Fragment>
+        </div>
     )
 }
 
