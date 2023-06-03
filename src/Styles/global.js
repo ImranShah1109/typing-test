@@ -8,8 +8,8 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     body{
-        background : black;
-        color : white;
+        background : ${({theme})=>theme.background};
+        color : ${({theme})=>theme.textColor};
         margin : 0;
         padding : 0;
         transition : all 0.25s linear;
@@ -40,6 +40,7 @@ export const GlobalStyles = createGlobalStyle`
         font-size : 32px;
         display : flex;
         flex-wrap : wrap;
+        color : ${({theme})=>theme.typeBoxText};
     }
 
     .word{
@@ -105,6 +106,14 @@ export const GlobalStyles = createGlobalStyle`
     .time-mode:hover{
         color : green;
         cursor : pointer;
+    }
+
+    .footer{
+        width: 1000px;
+        display : flex;
+        justify-content : space-between;
+        margin-left : auto;
+        margin-right : auto;
     }
 
 `
