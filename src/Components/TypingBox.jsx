@@ -15,6 +15,12 @@ const TypingBox = () => {
     const [testEnd, setTestEnd] = useState(false);
     const [intervalId, setIntervalId] = useState(null);
 
+    const [correctChars, setCorrectChars] = useState(0);
+    const [incorrectChars, setIncorrectChars] = useState(0);
+    const [missedChars, setMissedChars] = useState(0);
+    const [extraChars, setExtraChars] = useState(0);
+    const [correctWords, setCorrectWords] = useState(0);
+
     const [wordsArray, setWordsArray] = useState(()=>{
         return randomWords(50);
     });
@@ -87,12 +93,19 @@ const TypingBox = () => {
             if(e.keyCode === 32){ //32 keyCode is for space
                 // logic for space
 
+                let correctCharInWord = wordsSpanRef[currWordIndex].current.querySelectorAll('.correct');
+
+                if(correctCharInWord === allCurrChars.length){
+                    setCorrectWords(correctWords+1);
+                }
+
                 if(allCurrChars.length <= currCharIndex){
                     // remove cursor from last place in a word
                     allCurrChars[currCharIndex-1].classList.remove("current-right")
                 }
                 else{
                     // remove cursor from in between in the word
+                    setMissedChars( missedChars + (allCurrChars.length - currCharIndex));
                     allCurrChars[currCharIndex].classList.remove("current")
                 }
 
@@ -139,16 +152,19 @@ const TypingBox = () => {
                 allCurrChars[currCharIndex-1].classList.remove('current-right');
                 wordsSpanRef[currWordIndex].current.append(newSpan);
                 setCurrCharIndex(currCharIndex+1);
+                setExtraChars(extraChars+1);
                 return;
             }
 
             if(e.key === allCurrChars[currCharIndex].innerText){
                 // console.log("correct input")
                 allCurrChars[currCharIndex].className = "correct"; 
+                setCorrectChars(correctChars+1);
             }
             else{
                 // console.log("incorrect");
                 allCurrChars[currCharIndex].className = "incorrect"; 
+                setIncorrectChars(incorrectChars+1);
             }
 
             if(currCharIndex+1 === allCurrChars.length){
@@ -161,6 +177,14 @@ const TypingBox = () => {
 
             setCurrCharIndex(currCharIndex+1);
         }
+    }
+
+    const calculateWPM = () =>{
+        return Math.round((correctChars/5)/(testTime/60))
+    }
+
+    const calculateAcc = () =>{
+        return Math.round((correctWords/currWordIndex)*100);
     }
 
     const focusInput = () =>{
