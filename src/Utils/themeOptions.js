@@ -13,7 +13,15 @@ const redTheme = {
     typeBoxText : 'pink'
 }
 
+const fledging = {
+    label : 'Fledging',
+    background : '#3B363F',
+    textColor : '#FC6E83',
+    typeBoxText : '#8E5568'
+}
+
 export const themeOptions = [
     {label:'Dark', value : darkTheme},
-    {label:'red', value : redTheme}
+    {label:'red', value : redTheme},
+    {label:'Fledging', value : fledging}
 ]

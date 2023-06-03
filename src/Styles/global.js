@@ -58,11 +58,11 @@ export const GlobalStyles = createGlobalStyle`
         animation-timing-function : ease;
 
         @keyframes blinking{
-            0%{border-left-color : white;}
-            25%{border-left-color : black;}
-            50%{border-left-color : white;}
-            75%{border-left-color : black;}
-            100%{border-left-color : white;}
+            0%{border-left-color : ${({theme})=>theme.textColor};}
+            25%{border-left-color : ${({theme})=>theme.background};}
+            50%{border-left-color : ${({theme})=>theme.textColor};}
+            75%{border-left-color : ${({theme})=>theme.background};}
+            100%{border-left-color : ${({theme})=>theme.textColor};}
         }
     }
 
@@ -72,16 +72,16 @@ export const GlobalStyles = createGlobalStyle`
         animation-timing-function : ease;
 
         @keyframes blinkingRight{
-            0%{border-right-color : white;}
-            25%{border-right-color : black;}
-            50%{border-right-color : white;}
-            75%{border-right-color : black;}
-            100%{border-right-color : white;}
+            0%{border-right-color : ${({theme})=>theme.textColor};}
+            25%{border-right-color : ${({theme})=>theme.background};}
+            50%{border-right-color : ${({theme})=>theme.textColor};}
+            75%{border-right-color : ${({theme})=>theme.background};}
+            100%{border-right-color : ${({theme})=>theme.textColor};}
         }
     }
 
     .correct{
-        color : green;
+        color : ${({theme})=>theme.textColor};
     }
 
     .incorrect{
