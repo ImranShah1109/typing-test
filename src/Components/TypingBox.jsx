@@ -22,6 +22,7 @@ const TypingBox = () => {
     const [extraChars, setExtraChars] = useState(0);
     const [correctWords, setCorrectWords] = useState(0);
 
+
     const [wordsArray, setWordsArray] = useState(() => {
         return randomWords(50);
     });
@@ -34,6 +35,8 @@ const TypingBox = () => {
     }, [wordsArray]);
 
 
+    const [graphData, setGraphData] = useState([]);
+
     const startTimer = () => {
 
         const intervalId = setInterval(timer, 1000);
@@ -42,6 +45,17 @@ const TypingBox = () => {
 
         function timer() {
             setCountDown((latestCountDown) => {
+
+                setCorrectChars((correctChars)=>{
+                    setGraphData((graphData)=>{
+                        return [...graphData, [
+                            testTime - latestCountDown + 1,
+                            (correctChars/5)/((testTime-latestCountDown+1)/60)
+                        ]];
+                    })
+
+                    return correctChars;
+                })
 
                 if (latestCountDown === 1) {
                     setTestEnd(true);
@@ -96,7 +110,7 @@ const TypingBox = () => {
 
                 let correctCharInWord = wordsSpanRef[currWordIndex].current.querySelectorAll('.correct');
 
-                if (correctCharInWord === allCurrChars.length) {
+                if (correctCharInWord.length === allCurrChars.length) {
                     setCorrectWords(correctWords + 1);
                 }
 
@@ -213,6 +227,7 @@ const TypingBox = () => {
                         incorrectChars={incorrectChars} 
                         missedChars={missedChars}
                         extraChars={extraChars}
+                        graphData={graphData}
                     />
                 )
                 :
