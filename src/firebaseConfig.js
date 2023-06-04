@@ -3,7 +3,7 @@ import 'firebase/auth';
 import 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBkIJ3mBWCnwLgjSxfNBwAaXhL3gicKoUY",
+    apiKey: process.env.REACT_APP_FIREBASE_API,
     authDomain: "typing-speed-test-f4ee1.firebaseapp.com",
     projectId: "typing-speed-test-f4ee1",
     storageBucket: "typing-speed-test-f4ee1.appspot.com",

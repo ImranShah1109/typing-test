@@ -10,6 +10,7 @@ const TypingBox = () => {
     const inputRef = useRef(null)
 
     const { testTime } = useTestMode();
+    // console.log("TypingBox testTime -> ",testTime);
 
     const [countDown, setCountDown] = useState(testTime);
     const [testStart, setTestStart] = useState(false);
@@ -78,7 +79,9 @@ const TypingBox = () => {
         setTestStart(false);
         setTestEnd(false);
         setWordsArray(randomWords(50));
-        resetWordSpanRefClassname();
+        if(!testEnd){
+            resetWordSpanRefClassname();
+        }
         focusInput();
     }
 

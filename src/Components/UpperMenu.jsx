@@ -6,6 +6,7 @@ export const UpperMenu = ({countDown}) => {
     const {setTestTime} = useTestMode();
 
     const updateTime = (e) =>{
+        // console.log(e.target.id)
         setTestTime(Number(e.target.id));
     }
 
