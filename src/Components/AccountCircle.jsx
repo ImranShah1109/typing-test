@@ -3,10 +3,13 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { AppBar, Modal, Tab, Tabs } from '@mui/material';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
+import { useTheme } from '../Context/ThemeContext';
 
 const AccountCircle = () => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(0);
+
+    const {theme} = useTheme();
 
     const handleModalOpen = () =>{
         setOpen(true);
@@ -40,8 +43,8 @@ const AccountCircle = () => {
                         value={value}
                         onChange={handleValueChange}
                         variant='fullWidth'>
-                        <Tab label='login'></Tab>
-                        <Tab label='signup'></Tab>
+                        <Tab label='login' style={{color:theme.textColor}}></Tab>
+                        <Tab label='signup' style={{color:theme.textColor}}></Tab>
                     </Tabs>
                 </AppBar>
                 {value === 0 && <LoginForm/>}

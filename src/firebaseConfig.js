@@ -1,9 +1,9 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
 const firebaseConfig = {
-    apiKey: process.env.REACT_APP_FIREBASE_API,
+    apiKey: "AIzaSyBkIJ3mBWCnwLgjSxfNBwAaXhL3gicKoUY",
     authDomain: "typing-speed-test-f4ee1.firebaseapp.com",
     projectId: "typing-speed-test-f4ee1",
     storageBucket: "typing-speed-test-f4ee1.appspot.com",
