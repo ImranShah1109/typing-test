@@ -5,7 +5,7 @@ import { auth } from '../firebaseConfig';
 import { toast } from 'react-toastify';
 import errorMapping from '../Utils/errorMapping';
 
-const SignupForm = () => {
+const SignupForm = ({handleClose}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -51,6 +51,7 @@ const SignupForm = () => {
                 progress: undefined,
                 theme: "dark",
                 });
+            handleClose();
         }).catch((err)=>{
             toast.error(errorMapping[err.code] || 'some error occured',{
                 position: "top-right",

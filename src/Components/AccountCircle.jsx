@@ -9,6 +9,10 @@ import {signInWithPopup, GoogleAuthProvider} from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 import { toast } from 'react-toastify';
 import errorMapping from '../Utils/errorMapping';
+import LogoutIcon from '@mui/icons-material/Logout';
+import {useAuthState} from 'react-firebase-hooks/auth';
+import { useNavigate } from 'react-router-dom';
+
 
 const AccountCircle = () => {
     const [open, setOpen] = useState(false);
@@ -16,8 +20,17 @@ const AccountCircle = () => {
 
     const {theme} = useTheme();
 
+    const navigate = useNavigate(); 
+    const [user] = useAuthState(auth);
+
     const handleModalOpen = () =>{
-        setOpen(true);
+        if(user){
+            // navigate to user page
+            navigate('/user');
+
+        }else{
+            setOpen(true);
+        }
     }
 
     const handleClose = () =>{
@@ -26,6 +39,32 @@ const AccountCircle = () => {
 
     const handleValueChange = (e,v) =>{
         setValue(v);
+    }
+
+    const logout = () =>{
+        auth.signOut().then((res)=>{
+            toast.success('Logged out',{
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
+        }).catch((err)=>{
+            toast.error('Not able to logged out',{
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
+        })
     }
 
     const googleProvider = new GoogleAuthProvider();
@@ -42,6 +81,7 @@ const AccountCircle = () => {
                 progress: undefined,
                 theme: "dark",
                 });
+            handleClose();
         }).catch((err)=>{
             toast.error(errorMapping[err.code] || 'Not able to use google authentication',{
                 position: "top-right",
@@ -59,7 +99,7 @@ const AccountCircle = () => {
   return (
     <div>
         <AccountCircleIcon onClick={handleModalOpen}/>
-
+        {user && <LogoutIcon onClick={logout}/>}
         <Modal
             open={open}
             onClose={handleClose}
@@ -80,8 +120,8 @@ const AccountCircle = () => {
                         <Tab label='signup' style={{color:theme.textColor}}></Tab>
                     </Tabs>
                 </AppBar>
-                {value === 0 && <LoginForm/>}
-                {value === 1 && <SignupForm/>}
+                {value === 0 && <LoginForm handleClose={handleClose}/>}
+                {value === 1 && <SignupForm handleClose={handleClose}/>}
 
                 <Box>
                     <span>OR</span>
