@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useTheme } from '../Context/ThemeContext';
 import { auth } from '../firebaseConfig';
 import { toast } from 'react-toastify';
+import errorMapping from '../Utils/errorMapping';
 
 const SignupForm = () => {
     const [email, setEmail] = useState('');
@@ -51,7 +52,7 @@ const SignupForm = () => {
                 theme: "dark",
                 });
         }).catch((err)=>{
-            toast.error('Not able to create user',{
+            toast.error(errorMapping[err.code] || 'some error occured',{
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
