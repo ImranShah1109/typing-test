@@ -6,10 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 import TableUserData from '../Components/TableUserData';
 import Graph from '../Components/Graph'
+import UserInfo from '../Components/UserInfo';
 
 const UserPage = () => {
   const [data, setData] = useState([]);
   const [graphData, setGraphData] = useState([]);
+
+  const [dataLoading, setDataLoading] = useState(true);
 
   const [user, loading] = useAuthState(auth);
 
@@ -37,6 +40,7 @@ const UserPage = () => {
       })
       setData(tempData);
       setGraphData(tempGraphData.reverse());
+      setDataLoading(false)
     })
   }
 
@@ -48,16 +52,19 @@ const UserPage = () => {
       navigate('/');
     }
   }, [loading]);
-
-  if(loading){
-    return <CircularProgress/>
+  
+  if(loading || dataLoading){
+    return <div className='center-of-screen'><CircularProgress size={300}/></div>
   }
 
   // console.log(data)
 
   return (
     <div className="canvas">
-        <Graph graphData={graphData}/>
+        <UserInfo totalTastsTaken={data.length}/>
+        <div className="graph-user-page">
+            <Graph graphData={graphData}/>
+        </div>
         <TableUserData data={data}/>
     </div>
   )
