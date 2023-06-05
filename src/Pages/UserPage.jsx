@@ -4,9 +4,12 @@ import { auth, db } from '../firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
+import TableUserData from '../Components/TableUserData';
+import Graph from '../Components/Graph'
 
 const UserPage = () => {
   const [data, setData] = useState([]);
+  const [graphData, setGraphData] = useState([]);
 
   const [user, loading] = useAuthState(auth);
 
@@ -16,11 +19,24 @@ const UserPage = () => {
     const resultRef = db.collection('Results');
     const { uid } = auth.currentUser;
     let tempData = [];
-    resultRef.where('userId', '==', uid).get().then((snapshot) => {
+    let tempGraphData = [];
+
+    resultRef
+      .where('userId', '==', uid)
+      .orderBy('timeStamp', 'desc')
+      .get()
+      .then((snapshot) => {
       snapshot.docs.map((doc) => {
         tempData.push({...doc.data()});
+        tempGraphData.push(
+          [
+            doc.data().timeStamp.toDate().toLocaleString().split(',')[0], 
+            doc.data().wpm
+          ]
+        )
       })
       setData(tempData);
+      setGraphData(tempGraphData.reverse());
     })
   }
 
@@ -37,8 +53,13 @@ const UserPage = () => {
     return <CircularProgress/>
   }
 
+  // console.log(data)
+
   return (
-    <div>UserPage</div>
+    <div className="canvas">
+        <Graph graphData={graphData}/>
+        <TableUserData data={data}/>
+    </div>
   )
 }
 
