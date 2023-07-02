@@ -22,11 +22,14 @@ const AccountCircle = () => {
 
     const navigate = useNavigate(); 
     const [user] = useAuthState(auth);
+    console.log("user >> ",user);
 
     const handleModalOpen = () =>{
         if(user){
             // navigate to user page
-            navigate('/user');
+            console.log("clicked user")
+            navigate('user');
+            setOpen(false);
 
         }else{
             setOpen(true);
@@ -42,6 +45,7 @@ const AccountCircle = () => {
     }
 
     const logout = () =>{
+        console.log("logout occured");
         auth.signOut().then((res)=>{
             toast.success('Logged out',{
                 position: "top-right",

@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 import { themeOptions } from '../Utils/themeOptions';
 import { useTheme } from '../Context/ThemeContext';
+import EmailIcon from "@mui/icons-material/Email";
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+
 
 
 const Footer = () => {
@@ -15,7 +19,15 @@ const Footer = () => {
   return (
     <div className="footer">
         <div className="links">
-            Link
+            <a href="https://github.com/ImranShah1109">
+            <GitHubIcon className="social-link" />
+            </a>
+            <a href="mailto:imranshaha41@gmail.com">
+            <EmailIcon className="social-link" />
+            </a>
+            <a href="https://www.linkedin.com/in/imran-shaha-651904143/">
+            <LinkedInIcon className="social-link" />
+            </a>
         </div>
         <div className="themeButton">
             <Select

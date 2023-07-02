@@ -116,6 +116,16 @@ export const GlobalStyles = createGlobalStyle`
         margin-right : auto;
     }
 
+    .links{
+        display : flex;
+        justify-content : space-between;
+        width : 15%;
+    }
+
+    .links a{
+        color : ${({ theme }) => theme.textColor};
+    }
+
     .stats-box{
         display : flex;
         width : 1000px;

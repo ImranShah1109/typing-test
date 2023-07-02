@@ -15,12 +15,13 @@ const UserPage = () => {
   const [dataLoading, setDataLoading] = useState(true);
 
   const [user, loading] = useAuthState(auth);
-
+  console.log("useAuthstate >> ",user,loading);
   const navigate = useNavigate();
 
   const fetchUserData = () => {
     const resultRef = db.collection('Results');
     const { uid } = auth.currentUser;
+    // console.log("user id fm userpage > ",uid);
     let tempData = [];
     let tempGraphData = [];
 
