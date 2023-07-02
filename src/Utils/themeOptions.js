@@ -6,6 +6,13 @@ const darkTheme = {
     typeBoxText : 'grey'
 }
 
+const lightTheme = {
+    label : 'Light',
+    background : 'white',
+    textColor : 'black',
+    typeBoxText : 'grey'
+}
+
 const redTheme = {
     label : 'Red',
     background : 'red',
@@ -20,8 +27,17 @@ const fledging = {
     typeBoxText : '#8E5568'
 }
 
+const bumblebee = {
+    label : 'Bumblebee',
+    background : '#fda900',
+    textColor : 'black',
+    typeBoxText : 'blue'
+}
+
 export const themeOptions = [
     {label:'Dark', value : darkTheme},
+    {label:'Light', value : lightTheme},
     {label:'red', value : redTheme},
-    {label:'Fledging', value : fledging}
+    {label:'Fledging', value : fledging},
+    {label:'Bumblebee', value : bumblebee}
 ]
