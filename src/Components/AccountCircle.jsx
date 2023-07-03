@@ -27,7 +27,7 @@ const AccountCircle = () => {
     const handleModalOpen = () =>{
         if(user){
             // navigate to user page
-            console.log("clicked user")
+            // console.log("clicked user")
             navigate('user');
             setOpen(false);
 
